@@ -26,7 +26,7 @@ class Observable<T> {
         });
     }
 
-    OnSubscribe<T> onSubscribe;
+    final OnSubscribe<T> onSubscribe;
 
     Observable(OnSubscribe<T> onSubscribe) {
         this.onSubscribe = onSubscribe;
