@@ -1,8 +1,8 @@
 package com.github.gfx.rxinthebox;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.ActionBarActivity;
 import android.widget.Toast;
 
 class Observable<T> {
@@ -31,7 +31,7 @@ interface Subscriber<T>  {
     void onError(Throwable e);
 }
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
