@@ -41,9 +41,9 @@ class Observable<T> {
         onSubscribe.call(subscriber);
     }
 
-    public interface Operator<R, T> extends
-            Func1<Subscriber<R>, Subscriber<T>> {
+    public interface Operator<R, T> {
 
+        Subscriber<T> call(Subscriber<R> value);
     }
 
     public <R> Observable<R> lift(final Operator<R, T> operator) {
@@ -211,11 +211,6 @@ class OperatorObserveOn<T> implements Observable.Operator<T, T> {
             }
         };
     }
-}
-
-interface Func1<T, R> {
-
-    R call(T value);
 }
 
 public class MainActivity extends Activity {
