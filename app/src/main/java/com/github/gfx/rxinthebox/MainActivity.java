@@ -3,6 +3,7 @@ package com.github.gfx.rxinthebox;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.widget.Toast;
 
 class Observable<T> {
@@ -33,6 +34,8 @@ interface Subscriber<T>  {
 
 public class MainActivity extends Activity {
 
+    private static final String TAG = MainActivity.class.getSimpleName();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +55,7 @@ public class MainActivity extends Activity {
                     @Override
                     public void run() {
                         subscriber.onNext(value);
+                        subscriber.onComplete();
                     }
                 }, 1000);
             }
@@ -64,17 +68,27 @@ public class MainActivity extends Activity {
         observable.subscribe(new Subscriber<String>() {
             @Override
             public void onNext(String value) {
-                Toast.makeText(MainActivity.this, "onNext: " + value, Toast.LENGTH_LONG).show();
+                log("onNext: " + value);
             }
 
             @Override
             public void onComplete() {
-                Toast.makeText(MainActivity.this, "onComplete", Toast.LENGTH_LONG).show();
+                log("onComplete");
             }
 
             @Override
             public void onError(Throwable e) {
-                Toast.makeText(MainActivity.this, "onError", Toast.LENGTH_LONG).show();
+                log("onError");
+            }
+        });
+    }
+
+    void log(final String message) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Log.d(TAG, message);
+                Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
             }
         });
     }
